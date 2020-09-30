@@ -1,0 +1,64 @@
+//========================================================================================
+//  
+//  $File: $
+//  
+//  Owner: Alexander Nevgen
+//  
+//  $Author: $
+//  
+//  $DateTime: $
+//  
+//  $Revision: $
+//  
+//  $Change: $
+//  
+//  Copyright 1997-2008 Adobe Systems Incorporated. All rights reserved.
+//  
+//  NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance 
+//  with the terms of the Adobe license agreement accompanying it.  If you have received
+//  this file from a source other than Adobe, then your use, modification, or 
+//  distribution of it requires the prior written permission of Adobe.
+//  
+//========================================================================================
+
+#ifdef __ODFRC__
+
+
+// Japanese string table is defined here
+
+resource StringTable (kSDKDefStringsResourceID + index_jaJP)
+{
+        k_jaJP,	// Locale Id
+        0,		// Character encoding converter
+
+        {
+        	// ----- Menu strings
+                kLCCompanyKey,					kLCCompanyValue,
+                kLCAboutMenuKey,				kLCPluginName "[JP]",
+                kLCPluginsMenuKey,				kLCPluginName "[JP]",
+				kLCDialogMenuItemKey,			"Show dialog [JP]",
+
+                kSDKDefAboutThisPlugInMenuKey,			kSDKDefAboutThisPlugInMenuValue_jaJP,
+
+                // ----- Command strings
+
+                // ----- Window strings
+
+                // ----- Panel/dialog strings
+					kLCDialogTitleKey,     kLCPluginName "[JP]",
+                    kLCDropDownItem_1Key, "Item1 [JP]",
+                    kLCDropDownItem_2Key, "Item2 [JP]",
+                    kLCDropDownItem_3Key, "Item3 [JP]",
+                //StaticText string key
+                    kLCStaticTextKey, "UAN",
+
+              // ----- Error strings
+
+                // ----- Misc strings
+                kLCAboutBoxStringKey,			kLCPluginName " [JP], version " kLCVersion " by " kLCAuthor "\n\n" kSDKDefCopyrightStandardValue "\n\n" kSDKDefPartnersStandardValue_jaJP,
+
+        }
+
+};
+
+#endif // __ODFRC__

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="15.0">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>LinesCounter</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{E1C9FA39-0B93-4412-BE9D-261B1B562E15}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LCReleaseWin32.sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LCDebugWin32.sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LCReleaseX64.sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LCDebugX64.sdk.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\debug\\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\objD\LinesCounter\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Adobe\Adobe InDesign 2020\Plug-Ins\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\objDx64\LinesCounter\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\release\\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\objR\LinesCounter\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\Adobe\Adobe InDesign 2020\Plug-Ins\LinesCounter\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\objRx64\LinesCounter\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName).sdk</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName).sdk</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName).sdk</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.pln</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.pln</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.pln</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.pln</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ExecutablePath>$(ID_SDKs_DIR)\IND-20\devtools\bin\;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ExecutablePath>$(ID_SDKs_DIR)\IND-20\devtools\bin\;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>$(IntDir)LinesCounter.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg @"LinesCountercpp.rsp"</AdditionalOptions>
+      <PrecompiledHeaderOutputFile>$(IntDir)LinesCounter.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;BOOST_SYSTEM_NO_DEPRECATED;DEBUG;STRICT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>VCPlugInHeaders.h</PrecompiledHeaderFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>merge_res.cmd "$(IntDir)"  LC &amp; echo Deleting old resources... &amp; del /f /s "$(TargetDir)($(TargetName) Resources)\"*.idrc &gt; $(IntDir)prevDeletedResources.txt &amp;  xcopy /Q /E "$(IntDir)"*.idrc "$(TargetDir)($(TargetName) Resources)\" /Y</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>$(ID_SDK_DIR)\build\win\objd\PMRuntime.lib; $(ID_SDK_DIR)\build\win\objd\Public.lib; $(ID_SDK_DIR)\build\win\objd\WidgetBin.lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>..\debug\\LinesCounter.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(LIB_DIR)\LinesCounter/LinesCounter.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>restore_res.cmd "$(IntDir)"  LC</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <TypeLibraryName>$(IntDir)LinesCounter.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg @"LinesCountercpp.rsp"</AdditionalOptions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;BOOST_SYSTEM_NO_DEPRECATED;DEBUG;STRICT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>VCPlugInHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)LinesCounter.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalIncludeDirectories>$(ID_SDKs_DIR)\IND-20\source\precomp\msvc;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\xmedia;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\ui;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\tables;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\graphics;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\text;$(ID_SDKs_DIR)\IND-20\source\public\libs\widgetbin\includes;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\workgroup;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive\ui;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\colormgmt;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\utils;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\incopy;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\layout;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\architecture;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\cj4;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\sharedcontent;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\preflight;$(ID_SDKs_DIR)\IND-20\source\public\facades\graphics;$(ID_SDKs_DIR)\IND-20\source\public\facades\text;$(ID_SDKs_DIR)\IND-20\source\public\facades\layout;$(ID_SDKs_DIR)\IND-20\source\precomp\common;$(ID_SDKs_DIR)\IND-20\source\public\includes;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\plugins;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\files;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\objectmodel;$(ID_SDKs_DIR)\IND-20\source\sdksamples\common;$(ID_SDKs_DIR)\IND-20\external\afl\includes;$(ID_SDKs_DIR)\IND-20\external\asl\boost_libraries;$(ID_SDKs_DIR)\IND-20\external\asl\adobe_source_libraries;$(ID_SDKs_DIR)\IND-20\external\asl\intel_tbb_libraries\include;$(ID_SDKs_DIR)\IND-20\external\icu\include;$(ID_SDKs_DIR)\IND-20\external\dva\third_party\boost_libraries;$(ID_SDKs_DIR)\IND-20\external\dva\third_party\adobe_source_libraries;$(ID_SDKs_DIR)\IND-20\source\sdksamples\snippetrunner;$(ID_SDKs_DIR)\IND-20\source\public\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>merge_res.cmd "$(IntDir)"  LC &amp; echo Deleting old resources... &amp; del /f /s "$(TargetDir)($(TargetName) Resources)\"*.idrc &gt; $(IntDir)prevDeletedResources.txt &amp;  xcopy /Q /E "$(IntDir)"*.idrc "$(TargetDir)($(TargetName) Resources)\" /Y</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>$(ID_SDK_DIR)\build\win\objdx64\PMRuntime.lib;$(ID_SDK_DIR)\build\win\objdx64\Public.lib;$(ID_SDK_DIR)\build\win\objdx64\WidgetBin.lib;C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x64\AdvAPI32.Lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>..\debugx64\\LinesCounter.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(LIB_DIR)\LinesCounter/LinesCounter.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(ID_SDKs_DIR)\IND-20\build\win\objrx64\</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>restore_res.cmd "$(IntDir)"  LC</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>$(IntDir)LinesCounter.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg @"LinesCountercpp.rsp"</AdditionalOptions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;BOOST_SYSTEM_NO_DEPRECATED;STRICT;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>VCPlugInHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)LinesCounter.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>merge_res.cmd "$(IntDir)"  LC &amp; echo Deleting old resources... &amp; del /f /s "$(TargetDir)($(TargetName) Resources)\"*.idrc &gt; $(IntDir)prevDeletedResources.txt &amp;  xcopy /Q /E "$(IntDir)"*.idrc "$(TargetDir)($(TargetName) Resources)\" /Y</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>$(ID_SDK_DIR)\build\win\objr\PMRuntime.lib; $(ID_SDK_DIR)\build\win\objr\Public.lib; $(ID_SDK_DIR)\build\win\objr\WidgetBin.lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>..\release\\LinesCounter.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(LIB_DIR)\LinesCounter/LinesCounter.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>restore_res.cmd "$(IntDir)"  LC</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <TypeLibraryName>$(IntDir)LinesCounter.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg @"LinesCountercpp.rsp"</AdditionalOptions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;BOOST_SYSTEM_NO_DEPRECATED;STRICT;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>VCPlugInHeaders.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)LinesCounter.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalIncludeDirectories>$(ID_SDKs_DIR)\IND-20\source\public\interfaces\xmedia;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\tables;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\text;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\graphics;$(ID_SDKs_DIR)\IND-20\source\public\libs\widgetbin\includes;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\workgroup;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive\ui;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\colormgmt;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\utils;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\incopy;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\layout;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\architecture;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\cj4;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\sharedcontent;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\preflight;$(ID_SDKs_DIR)\IND-20\source\public\facades\graphics;$(ID_SDKs_DIR)\IND-20\source\public\facades\text;$(ID_SDKs_DIR)\IND-20\source\public\facades\layout;$(ID_SDKs_DIR)\IND-20\source\precomp\common;$(ID_SDKs_DIR)\IND-20\source\public\includes;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\plugins;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\files;$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\objectmodel;$(ID_SDKs_DIR)\IND-20\source\sdksamples\common;$(ID_SDKs_DIR)\IND-20\external\afl\includes;$(ID_SDKs_DIR)\IND-20\external\asl\boost_libraries;$(ID_SDKs_DIR)\IND-20\external\asl\adobe_source_libraries;$(ID_SDKs_DIR)\IND-20\external\asl\intel_tbb_libraries\include;$(ID_SDKs_DIR)\IND-20\external\icu\include;$(ID_SDKs_DIR)\IND-20\external\dva\third_party\boost_libraries;$(ID_SDKs_DIR)\IND-20\external\dva\third_party\adobe_source_libraries;$(ID_SDKs_DIR)\IND-20\source\sdksamples\snippetrunner;$(ID_SDKs_DIR)\IND-20\source\public\includes\;$(ID_SDKs_DIR)\IND-20\source\precomp\msvc\;$(ID_SDKs_DIR)\IND-20\source\public\interfaces\ui;E:\LinesCounterPlugin\win\source;E:\LinesCounterPlugin\win\headers</AdditionalIncludeDirectories>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(ID_SDKs_DIR)\IND-20\source\sdksamples\common\;$(ID_SDKs_DIR)\IND-20\source\public\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>merge_res.cmd "$(IntDir)"  LC &amp; echo Deleting old resources... &amp; del /f /s "$(TargetDir)($(TargetName) Resources)\"*.idrc &gt; $(IntDir)prevDeletedResources.txt &amp;  xcopy /Q /E "$(IntDir)"*.idrc "$(TargetDir)($(TargetName) Resources)\" /Y</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>$(ID_SDKs_DIR)\IND-20\build\win\objrx64\PMRuntime.lib;$(ID_SDKs_DIR)\IND-20\build\win\objrx64\Public.lib;$(ID_SDKs_DIR)\IND-20\build\win\objrx64\WidgetBin.lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>..\releasex64\\LinesCounter.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(LIB_DIR)\LinesCounter/LinesCounter.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(ID_SDKs_DIR)\IND-20\build\win\objrx64\</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
+    </Link>
+    <PostBuildEvent>
+      <Command>restore_res.cmd "$(IntDir)"  LC</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\\LCActionComponent.cpp" />
+    <ClCompile Include="..\source\\LCDialogController.cpp" />
+    <ClCompile Include="..\source\\LCDialogObserver.cpp" />
+    <ClCompile Include="$(id_sdk_dir)\source\public\libs\publiclib\statics\PlugInStatics.cpp" />
+    <ClCompile Include="$(ID_SDK_DIR)\source\sdksamples\common\SDKPlugInEntrypoint.cpp" />
+    <ClCompile Include="..\source\\LCID.cpp" />
+    <ClCompile Include="..\source\\LCNoStrip.cpp" />
+    <ClCompile Include="..\source\\TriggerResourceDeps.cpp" />
+    <ClCompile Include="$(id_sdk_dir)\source\precomp\msvc\VCPlugInHeaders.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\\LCID.h" />
+    <ClInclude Include="..\source\\LCFactoryList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\source\\LC.fr">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        odfrc $(ODFRC_ADDITIONAL_FLAGS) "%(FullPath)" -o "$(IntDir)%(Filename).fres" -d DEBUG  -i "..\source\" @"LinesCounterodfrc.rsp"
+      </Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)TriggerResourceDeps.obj;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename).fres;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        odfrc $(ODFRC_ADDITIONAL_FLAGS) "%(FullPath)" -o "$(IntDir)%(Filename).fres" -d DEBUG  -i "..\source\" @"LinesCounterodfrc.rsp"
+      </Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)TriggerResourceDeps.obj;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename).fres;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        odfrc $(ODFRC_ADDITIONAL_FLAGS) "%(FullPath)" -o "$(IntDir)%(Filename).fres" -i "..\source\" @"LinesCounterodfrc.rsp"
+      </Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)TriggerResourceDeps.obj;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename).fres;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        odfrc $(ODFRC_ADDITIONAL_FLAGS) "%(FullPath)" -o "$(IntDir)%(Filename).fres"  -i "$(ID_SDKs_DIR)\IND-20\source\precomp\msvc"   -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\xmedia" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\ui" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\tables" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\text" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\graphics" -i "$(ID_SDKs_DIR)\IND-20\source\public\libs\widgetbin\includes" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\workgroup" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\interactive\ui" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\colormgmt" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\utils" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\incopy" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\layout" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\architecture" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\cjk" -i "$(ID_SDKs_DIR)\IND-20\source\public\interfaces\preflight" -i "$(ID_SDKs_DIR)\IND-20\source\public\facades\text" -i "$(ID_SDKs_DIR)\IND-20\source\public\facades\graphics" -i "$(ID_SDKs_DIR)\IND-20\source\public\facades\layout" -i "$(ID_SDKs_DIR)\IND-20\source\precomp\common" -i "$(ID_SDKs_DIR)\IND-20\source\public\includes" -i "$(ID_SDKs_DIR)\IND-20\source\public\widget\includes" -i "$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\plugins" -i "$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\files" -i "$(ID_SDKs_DIR)\IND-20\source\public\libs\publiclib\objectmodel" -i "$(ID_SDKs_DIR)\IND-20\source\sdksamples\common" -i "$(ID_SDKs_DIR)\IND-20\external\dva\third_party\boost_libraries" -i "$(ID_SDKs_DIR)\IND-20\external\dva\third_party\adobe_source_libraries" -i "$(ID_SDKs_DIR)\IND-20\source\sdksamples\snippetrunner" 
+      </Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)TriggerResourceDeps.obj;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename).fres;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\source\\LC.rc">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">0x0809</Culture>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\source\;..\source\;$(ID_SDK_DIR)\source\precomp\msvc;$(ID_SDK_DIR)\source\public\includes;$(ID_SDK_DIR)\source\sdksamples\common;%(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">0x0809</Culture>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\source\;..\source\;$(ID_SDK_DIR)\source\precomp\msvc;$(ID_SDK_DIR)\source\public\includes;$(ID_SDK_DIR)\source\sdksamples\common;%(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">0x0809</Culture>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\source\;..\source\;$(ID_SDK_DIR)\source\precomp\msvc;$(ID_SDK_DIR)\source\public\includes;$(ID_SDK_DIR)\source\sdksamples\common;%(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Release|x64'">0x0809</Culture>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\source\;..\source\;$(ID_SDK_DIR)\source\precomp\msvc;$(ID_SDK_DIR)\source\public\includes;$(ID_SDK_DIR)\source\sdksamples\common;%(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\source\LC_enUS.fr" />
+    <None Include="..\source\LC_jaJP.fr" />
+    <None Include="..\source\LC_ruRU.fr" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

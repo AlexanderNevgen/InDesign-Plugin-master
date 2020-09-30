@@ -1,0 +1,397 @@
+//========================================================================================
+//  
+//  $File: $
+//  
+//  Owner: Alexander Nevgen
+//  
+//  $Author: $
+//  
+//  $DateTime: $
+//  
+//  $Revision: $
+//  
+//  $Change: $
+//  
+//  Copyright 1997-2012 Adobe Systems Incorporated. All rights reserved.
+//  
+//  NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance 
+//  with the terms of the Adobe license agreement accompanying it.  If you have received
+//  this file from a source other than Adobe, then your use, modification, or 
+//  distribution of it requires the prior written permission of Adobe.
+//  
+//========================================================================================
+
+#include "VCPlugInHeaders.h"
+
+// General includes:
+#include "MenuDef.fh"
+#include "ActionDef.fh"
+#include "ActionDefs.h"
+#include "AdobeMenuPositions.h"
+#include "LocaleIndex.h"
+#include "PMLocaleIds.h"
+#include "StringTable.fh"
+#include "ObjectModelTypes.fh"
+#include "ShuksanID.h"
+#include "ActionID.h"
+#include "CommandID.h"
+#include "WorkspaceID.h"
+#include "WidgetID.h"
+#include "BuildNumber.h"
+#include "PlugInModel_UIAttributes.h"
+
+#include "InterfaceColorDefines.h"
+#include "IControlViewDefs.h"
+#include "SysControlIDs.h"
+#include "Widgets.fh"	// for PalettePanelWidget or DialogBoss
+
+#include "EveInfo.fh"	// Required when using EVE for dialog layout/widget placement
+
+// Project includes:
+#include "LCID.h"
+#include "GenericID.h"
+#include "ShuksanID.h"
+#include "TextID.h"
+
+
+#ifdef __ODFRC__
+
+/*  
+ * Plugin version definition.
+ */
+resource PluginVersion (kSDKDefPluginVersionResourceID)
+{
+	kTargetVersion,
+	kLCPluginID,
+	kSDKDefPlugInMajorVersionNumber, kSDKDefPlugInMinorVersionNumber,
+	kSDKDefHostMajorVersionNumber, kSDKDefHostMinorVersionNumber,
+	kLCCurrentMajorFormatNumber, kLCCurrentMinorFormatNumber,
+	{ kInDesignProduct, kInCopyProduct },
+	{ kWildFS },
+	kUIPlugIn,
+	kLCVersion
+};
+
+/*  
+ * The ExtraPluginInfo resource adds extra information to the Missing Plug-in dialog
+ * that is popped when a document containing this plug-in's data is opened when
+ * this plug-in is not present. These strings are not translatable strings
+ * since they must be available when the plug-in isn't around. They get stored
+ * in any document that this plug-in contributes data to.
+ */
+resource ExtraPluginInfo(1)
+{
+	kLCCompanyValue,			// Company name
+	kLCMissingPluginURLValue,	// URL 
+	kLCMissingPluginAlertValue,	// Missing plug-in alert text
+};
+
+/* 
+ * Boss class definitions.
+ */
+resource ClassDescriptionTable(kSDKDefClassDescriptionTableResourceID)
+{{{
+
+	/*
+	 * This boss class supports two interfaces:
+	 * IActionComponent and IPMPersist.
+     *
+	 * 
+	 * @ingroup linescounter
+	 */
+	Class
+	{
+		kLCActionComponentBoss,
+		kInvalidClass,
+		{
+			// Handle the actions from the menu.
+			IID_IACTIONCOMPONENT, kLCActionComponentImpl,
+			// Persist the state of the menu across application instantiation. Implementation provided by the API.
+			IID_IPMPERSIST, kPMPersistImpl
+		}
+	},
+
+	/*
+	 * This boss class implements the dialog for this plug-in. All
+	 * dialogs must implement IDialogController. Specialisation of
+	 * IObserver is only necessary if you want to handle widget
+	 * changes dynamically rather than just gathering their values
+	 * and applying in the IDialogController implementation.
+	 * In this implementation IObserver is specialised so that the
+	 * plug-in's about box is popped when the info button widget
+	 * is clicked.
+     *
+	 * 
+	 * @ingroup linescounter
+	 */
+	Class
+	{
+		kLCDialogBoss,
+		kDialogBoss,
+		{
+			// Provides management and control over the dialog.
+			IID_IDIALOGCONTROLLER, kLCDialogControllerImpl,
+			
+			// Allows dynamic processing of dialog changes.
+			IID_IOBSERVER, kLCDialogObserverImpl,
+		}
+	},
+
+}}};
+
+/*  
+ * Implementation definition.
+ */
+resource FactoryList (kSDKDefFactoryListResourceID)
+{
+	kImplementationIDSpace,
+	{
+		#include "LCFactoryList.h"
+	}
+};
+
+/*  
+ * Menu definition.
+ */
+resource MenuDef (kSDKDefMenuResourceID)
+{
+	{
+		// The About sub-menu item for this plug-in.
+		kLCAboutActionID,			// ActionID (kInvalidActionID for positional entries)
+		kLCAboutMenuPath,			// Menu Path.
+		kSDKDefAlphabeticPosition,											// Menu Position.
+		kSDKDefIsNotDynamicMenuFlag,										// kSDKDefIsNotDynamicMenuFlag or kSDKDefIsDynamicMenuFlag
+
+		// The Plug-ins menu sub-menu items for this plug-in.
+		kLCDialogActionID,
+		kLCPluginsMenuPath,
+		kLCDialogMenuItemPosition,
+		kSDKDefIsNotDynamicMenuFlag,
+
+	}
+};
+
+/* 
+ * Action definition.
+ */
+resource ActionDef (kSDKDefActionResourceID)
+{
+	{
+		kLCActionComponentBoss, 		// ClassID of boss class that implements the ActionID.
+		kLCAboutActionID,	// ActionID.
+		kLCAboutMenuKey,	// Sub-menu string.
+		kOtherActionArea,				// Area name (see ActionDefs.h).
+		kNormalAction,					// Type of action (see ActionDefs.h).
+		kDisableIfLowMem,				// Enabling type (see ActionDefs.h).
+		kInvalidInterfaceID,			// Selection InterfaceID this action cares about or kInvalidInterfaceID.
+		kSDKDefInvisibleInKBSCEditorFlag, // kSDKDefVisibleInKBSCEditorFlag or kSDKDefInvisibleInKBSCEditorFlag.
+
+		kLCActionComponentBoss,
+		kLCDialogActionID,		
+		kLCDialogMenuItemKey,		
+		kOtherActionArea,			
+		kNormalAction,				
+		kDisableIfLowMem,	
+		kInvalidInterfaceID,		
+		kSDKDefVisibleInKBSCEditorFlag,
+
+	}
+};
+
+
+/*  
+ * Locale Indicies.
+ * The LocaleIndex should have indicies that point at your
+ * localizations for each language system that you are localized for.
+ */
+
+/*  
+ * String LocaleIndex.
+ */
+resource LocaleIndex ( kSDKDefStringsResourceID)
+{
+	kStringTableRsrcType,
+	{
+		kWildFS, k_enUS, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_enGB, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_deDE, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_frFR, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_esES, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_ptBR, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_svSE, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_daDK, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_nlNL, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_itIT, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_nbNO, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_fiFI, kSDKDefStringsResourceID + index_enUS
+		kWildFS, k_ruRU, kSDKDefStringsResourceID + index_enUS		/*index_ruRU */
+		kInDesignJapaneseFS, k_jaJP, kSDKDefStringsResourceID + index_jaJP
+
+	}
+};
+
+resource LocaleIndex (kSDKDefStringsNoTransResourceID)
+{
+	kStringTableRsrcType,
+	{
+		kWildFS, k_Wild, kSDKDefStringsNoTransResourceID + index_enUS
+	}
+};
+
+// Strings not being localized
+resource StringTable (kSDKDefStringsNoTransResourceID + index_enUS)
+{
+	k_enUS,									// Locale Id
+	kEuropeanMacToWinEncodingConverter,		// Character encoding converter
+	{
+	}
+};
+
+/*  
+ * Dialog LocaleIndex.
+ */
+resource LocaleIndex (kSDKDefDialogResourceID)
+{
+   kViewRsrcType,
+	{
+		kWildFS, k_Wild, kSDKDefDialogResourceID + index_enUS
+	}
+};
+
+/*  
+ * Type definition.
+ */
+type LCDialogWidget(kViewRsrcType) : DialogBoss(ClassID = kLCDialogBoss)
+{
+	WidgetEveInfo;
+};
+
+/*  
+ * Dialog definition.
+ * Use EVE for laying our dialogs.
+ *
+ * This view is not localised: therefore, it can reside here.
+ * However, if you wish to localise it, it is recommended to locate it in one of
+ * the localised framework resource files (i.e. LC_enUS.fr etc.) and
+ * update your Dialog LocaleIndex accordingly.
+ */
+resource LCDialogWidget (kSDKDefDialogResourceID + index_enUS)
+{
+	__FILE__, __LINE__,
+	kLCDialogWidgetID,	// WidgetID
+	kPMRsrcID_None,				// RsrcID
+	kBindNone,					// Binding
+	0, 0, 388,112,				// Frame (l,t,r,b)
+	kTrue, kTrue,				// Visible, Enabled
+	kLCDialogTitleKey,	// Dialog name
+	{
+		// This a spacer widget to simulate the dialog having content.
+		// This is necessary because EVE will auto-size the dialog according
+		// to its contents. Therefore, if it only has the OK and Cancel buttons,
+		// the dialog will appear very small.
+		// You should replace this widget with your own dialog content.
+		StaticTextWidget
+		(
+			0,								 // WidgetId (default=0)
+			kSysStaticTextPMRsrcId,			 // RsrcId
+			kBindNone,						 // Frame binding
+			Frame(0, 0, 270, 5),			 // Frame: left, top, right, bottom.
+			kTrue, kTrue,					 // Visible, Enabled
+			kAlignLeft, kEllipsizeEnd, kTrue // Alignment, ellipsize style, convert ampersands
+			"",								 // Initial text.
+			0,
+		),
+
+		// OK and Cancel buttons
+		EVEGenericPanelWidget
+		(
+			kInvalidWidgetID,		// WidgetId
+			0						// RsrcId
+			0,
+			kBindNone,				// Frame binding
+			Frame(0, 0, 0, 0),		// No need to specify dimensions of GenericPanelWidget
+			kTrue,					// Visible
+			kTrue,					// Enabled
+			kEVEAlignLeft | kEVERegularSpaceAfter | kEVEArrangeChildrenInColumn,
+			{
+				EVEDefaultButtonWidget
+				(
+					kOKButtonWidgetID,				// WidgetID
+					kSysButtonPMRsrcId,				// RsrcID
+					kBindNone,						// Binding
+					Frame(0, 0, 0, 0),				// Frame (l,t,r,b)
+					kTrue, kTrue,					// Visible, Enabled
+					kSDKDefOKButtonApplicationKey,	// Button text
+					kEVELargeSpaceAfter,
+				),
+		
+				EVECancelButtonWidget
+				(
+					kCancelButton_WidgetID,				// WidgetID
+					kSysButtonPMRsrcId,					// RsrcID
+					kBindNone,							// Binding
+					Frame(0, 0, 0, 0),					// Frame (l,t,r,b)
+					kTrue, kTrue,						// Visible, Enabled
+					kSDKDefCancelButtonApplicationKey,	// Button name
+					kTrue,								// Change to Reset on option-click.
+					kEVELargeSpaceAfter,
+				),
+				DropDownListWidget
+				(
+				kLCDropDownListWidgetID,
+				kSysDropDownPMRsrcId,
+				kBindNone,
+				Frame(10,16,140,36),
+				kTrue, kTrue,
+				{{
+					kLCDropDownItem_1Key, 
+					kLCDropDownItem_2Key,
+					kLCDropDownItem_3Key,
+				}}
+				),
+
+
+				TextEditBoxWidget
+				(
+				kLCTextEditBoxWidgetID,
+				kSysEditBoxPMRsrcId,
+				kBindNone,
+				Frame(200,16,250,36),
+				kTrue, kTrue,
+				0,
+				0, 0,
+				0,
+				kFalse,
+				kFalse,
+				kFalse,
+				kFalse,
+				0,
+				0,
+				"blank",
+				),
+
+
+				StaticTextWidget
+				(
+				kLCStaticTextWidgetID,
+				kSysStaticTextPMRsrcId,
+				kBindNone,
+				Frame(150,16,190,36),
+				kTrue, kTrue, kAlignRight,
+				kDontEllipsize, kTrue,
+				kLCStaticTextKey,
+				kLCTextEditBoxWidgetID
+
+				)
+			}
+		),
+	},
+
+	kEVEArrangeChildrenInRow | kEVESmallMargin,
+};
+
+#endif // __ODFRC__
+
+#include "LC_enUS.fr"
+#include "LC_jaJP.fr"
+#include "LC_ruRU.fr"

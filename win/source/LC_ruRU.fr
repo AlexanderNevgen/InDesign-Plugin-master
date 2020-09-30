@@ -1,0 +1,42 @@
+
+#ifdef __ODFRC__
+
+
+// Russian string table is defined here
+
+resource StringTable (kSDKDefStringsResourceID + index_ruRU)
+{
+        k_ruRU,	// Locale Id
+        0,		// Character encoding converter
+
+        {
+        	// ----- Menu strings
+                kLCCompanyKey,					kLCCompanyValue "[RU]",
+                kLCAboutMenuKey,					kLCPluginName "[RU]",
+                kLCPluginsMenuKey,				kLCPluginName "[RU]",
+				kLCDialogMenuItemKey,			"Show dialog [RU]",
+
+                kSDKDefAboutThisPlugInMenuKey,			kSDKDefAboutThisPlugInMenuValue_enUS,
+
+                // ----- Command strings
+
+                // ----- Window strings
+
+                // ----- Panel/dialog strings
+					kLCDialogTitleKey,     kLCPluginName "[RU]",
+                    kLCDropDownItem_1Key, "Ёлемент 1",
+                    kLCDropDownItem_2Key, "Ёлемент 2",
+                    kLCDropDownItem_3Key, "Ёлемент 3",
+
+                    kLCStaticTextKey, "RUB",
+
+              // ----- Error strings
+
+                // ----- Misc strings
+                kLCAboutBoxStringKey,			kLCPluginName " [RU], version " kLCVersion " by " kLCAuthor "\n\n" kSDKDefCopyrightStandardValue "\n\n" kSDKDefPartnersStandardValue_enUS,
+
+        }
+
+};
+
+#endif // __ODFRC__

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="4.0">
+   <PropertyGroup>
+      <ExecutablePath>..\..\..\SDK\IND-20\devtools\bin\;$(ExecutablePath)</ExecutablePath>
+   </PropertyGroup>
+   <ImportGroup Label="PropertySheets">
+      <Import Project="$(ID_SDKs_DIR)\IND-20\build\win\prj\ReleaseX64.props"/>
+   </ImportGroup>
+   <PropertyGroup Label="UserMacros">
+      <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+      <ID_SDK_DIR>..\..\..\SDK\IND-20</ID_SDK_DIR>
+   </PropertyGroup>
+</Project>
