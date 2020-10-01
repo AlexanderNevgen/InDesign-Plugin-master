@@ -31,7 +31,9 @@
 #include "LCID.h"
 #include "ISelectionManager.h"
 #include "ITextEditSuite.h"
-
+#include <IStoryList.h>
+#include <IComposeScanner.h>
+#include <String.h>
 /** LCDialogController
 	Methods allow for the initialization, validation, and application of dialog widget
 	values.
@@ -109,10 +111,43 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 	resultString.Append(editBoxString);
 	
 
+	PMString InitialString("asdfasdf");
+	SetTextControlData(kLCTextEditBoxWidgetID, InitialString);
+
 	InterfacePtr<ITextEditSuite> textEditSuite(myContext->GetContextSelection(), UseDefaultIID());
 
+	IDocument* doc1 = myContext->GetContextDocument();
+	InterfacePtr<IStoryList> storylist((IPMUnknown*)doc1, IID_ISTORYLIST);
+
+	PMString str;
+
+	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++) {
+
+		UIDRef storyRef = storylist->GetNthUserAccessibleStoryUID(i);
+		if (storyRef == kInvalidUIDRef) {
+			continue;
+		}
+
+		InterfacePtr<IComposeScanner> scanner(storylist->GetNthUserAccessibleStoryUID(i), UseDefaultIID());
+
+		WideString wstr;
+		scanner->CopyText(0, 1024, &wstr);
+
+		str.Append(wstr);
+		str.Append("|");
+
+		for (int i = 0; i < wstr.Length(); i++) {
+
+
+		}
+	}
+
+	
+
+
 	if (textEditSuite && textEditSuite->CanEditText()) {
-		ErrorCode status = textEditSuite->InsertText(WideString(resultString));
+		ErrorCode status = textEditSuite->InsertText(WideString(str));
 		ASSERT_MSG(status == kSuccess, "LCDialogController::ApplyFields: can't insert text");
 	}
+
 }
