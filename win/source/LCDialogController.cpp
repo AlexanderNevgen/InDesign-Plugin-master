@@ -33,7 +33,9 @@
 #include "ITextEditSuite.h"
 #include <IStoryList.h>
 #include <IComposeScanner.h>
-#include <String.h>
+#include <string>
+#include <IDataStringUtils.h>
+#include <ITextModel.h>
 /** LCDialogController
 	Methods allow for the initialization, validation, and application of dialog widget
 	values.
@@ -110,16 +112,14 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 	resultString.Append(moneySign);
 	resultString.Append(editBoxString);
 	
-
-	PMString InitialString("asdfasdf");
-	SetTextControlData(kLCTextEditBoxWidgetID, InitialString);
-
 	InterfacePtr<ITextEditSuite> textEditSuite(myContext->GetContextSelection(), UseDefaultIID());
 
 	IDocument* doc1 = myContext->GetContextDocument();
+
 	InterfacePtr<IStoryList> storylist((IPMUnknown*)doc1, IID_ISTORYLIST);
 
 	PMString str;
+	int finalCounter = 0;
 
 	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++) {
 
@@ -128,21 +128,31 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 			continue;
 		}
 
+
 		InterfacePtr<IComposeScanner> scanner(storylist->GetNthUserAccessibleStoryUID(i), UseDefaultIID());
 
 		WideString wstr;
 		scanner->CopyText(0, 1024, &wstr);
+		
+		uint32 CARRIAGE_RETURN_HEX = 0x0D;
+		int index = 0;
 
-		str.Append(wstr);
-		str.Append("|");
-
-		for (int i = 0; i < wstr.Length(); i++) {
-
-
+		int counter = 0;
+		for (int i = index; i < wstr.Length(); i++) {
+			if (wstr.GetChar(i) != UTF32TextChar(CARRIAGE_RETURN_HEX)) {
+				counter++;
+			}
+			else {
+				if (counter != 0) {
+					finalCounter++;
+				}
+				counter = 0;
+			}
 		}
+		
 	}
 
-	
+	str.Append((WideString)std::to_string(finalCounter).c_str());
 
 
 	if (textEditSuite && textEditSuite->CanEditText()) {
