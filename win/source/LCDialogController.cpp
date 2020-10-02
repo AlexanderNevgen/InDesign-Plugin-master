@@ -128,14 +128,19 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 			continue;
 		}
 
+		InterfacePtr<ITextModel> textModel(storyRef, IID_ITEXTMODEL);
 
 		InterfacePtr<IComposeScanner> scanner(storylist->GetNthUserAccessibleStoryUID(i), UseDefaultIID());
 
 		WideString wstr;
-		scanner->CopyText(0, 1024, &wstr);
+		scanner->CopyText(0, textModel->TotalLength(), &wstr);
 		
 		uint32 CARRIAGE_RETURN_HEX = 0x0D;
 		int index = 0;
+
+		if(textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
+			index = textModel->GetPrimaryStoryThreadSpan();
+		}
 
 		int counter = 0;
 		for (int i = index; i < wstr.Length(); i++) {
@@ -153,7 +158,6 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 	}
 
 	str.Append((WideString)std::to_string(finalCounter).c_str());
-
 
 	if (textEditSuite && textEditSuite->CanEditText()) {
 		ErrorCode status = textEditSuite->InsertText(WideString(str));
