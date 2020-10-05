@@ -36,6 +36,10 @@
 #include <string>
 #include <IDataStringUtils.h>
 #include <ITextModel.h>
+#include <IWaxIterator.h>
+#include <IWaxLine.h>
+#include <IWaxStrand.h>
+#include<CAlert.h>
 /** LCDialogController
 	Methods allow for the initialization, validation, and application of dialog widget
 	values.
@@ -100,26 +104,14 @@ WidgetID LCDialogController::ValidateDialogFields(IActiveContext* myContext)
 */
 void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const WidgetID& widgetId)
 {
-	PMString resultString;
-	resultString = this->GetTextControlData(kLCDropDownListWidgetID);
-	resultString.Translate();
 
-	PMString editBoxString = this->GetTextControlData(kLCTextEditBoxWidgetID);
-	PMString moneySign(kLCStaticTextKey);
-	moneySign.Translate();
-
-	resultString.Append('\t');
-	resultString.Append(moneySign);
-	resultString.Append(editBoxString);
-	
-	InterfacePtr<ITextEditSuite> textEditSuite(myContext->GetContextSelection(), UseDefaultIID());
+	//InterfacePtr<ITextEditSuite> textEditSuite(myContext->GetContextSelection(), UseDefaultIID());
 
 	IDocument* doc1 = myContext->GetContextDocument();
 
 	InterfacePtr<IStoryList> storylist((IPMUnknown*)doc1, IID_ISTORYLIST);
 
 	PMString str;
-	int finalCounter = 0;
 
 	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++) {
 
@@ -130,38 +122,34 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 
 		InterfacePtr<ITextModel> textModel(storyRef, IID_ITEXTMODEL);
 
-		InterfacePtr<IComposeScanner> scanner(storylist->GetNthUserAccessibleStoryUID(i), UseDefaultIID());
+		int32 wcount = 0;
 
-		WideString wstr;
-		scanner->CopyText(0, textModel->TotalLength(), &wstr);
-		
-		uint32 CARRIAGE_RETURN_HEX = 0x0D;
-		int index = 0;
+		InterfacePtr<IWaxStrand> waxStrand((IWaxStrand*)textModel->QueryStrand(kFrameListBoss, IID_IWAXSTRAND));
+		K2::scoped_ptr<IWaxIterator> waxIterator(waxStrand->NewWaxIterator());
+		IWaxLine* nextLine;
+		IWaxLine* firstLine;
 
-		if(textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
-			index = textModel->GetPrimaryStoryThreadSpan();
+		firstLine = waxIterator->GetFirstWaxLine(0);
+
+		if (firstLine->GetTextSpan() > 1) {
+			wcount++;
 		}
 
-		int counter = 0;
-		for (int i = index; i < wstr.Length(); i++) {
-			if (wstr.GetChar(i) != UTF32TextChar(CARRIAGE_RETURN_HEX)) {
-				counter++;
-			}
-			else {
-				if (counter != 0) {
-					finalCounter++;
+			while ((nextLine = waxIterator->GetNextWaxLine()) != nil) {
+
+				if (nextLine->GetTextSpan() > 1) {
+					wcount++;
 				}
-				counter = 0;
 			}
-		}
-		
+
+			if (textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
+
+				wcount--;
+			}
+
+		str.Append((WideString)"total lines in document - ");
+		str.Append((WideString)std::to_string(wcount).c_str());
+
+		CAlert::InformationAlert(str);
 	}
-
-	str.Append((WideString)std::to_string(finalCounter).c_str());
-
-	if (textEditSuite && textEditSuite->CanEditText()) {
-		ErrorCode status = textEditSuite->InsertText(WideString(str));
-		ASSERT_MSG(status == kSuccess, "LCDialogController::ApplyFields: can't insert text");
-	}
-
 }
