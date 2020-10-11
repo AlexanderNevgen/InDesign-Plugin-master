@@ -29,17 +29,22 @@
 #include "CDialogController.h"
 // Project includes:
 #include "LCID.h"
-#include "ISelectionManager.h"
-#include "ITextEditSuite.h"
 #include <IStoryList.h>
-#include <IComposeScanner.h>
 #include <string>
-#include <IDataStringUtils.h>
 #include <ITextModel.h>
 #include <IWaxIterator.h>
 #include <IWaxLine.h>
 #include <IWaxStrand.h>
-#include<CAlert.h>
+#include <CAlert.h>
+#include "tinyxml2.h"
+#include <chrono>
+#include <ctime> 
+
+//using namespace tinyxml2;
+// DynamDOM.cpp : Defines the entry point for the console application.
+//
+
+
 /** LCDialogController
 	Methods allow for the initialization, validation, and application of dialog widget
 	values.
@@ -48,6 +53,8 @@
 	
 	@ingroup linescounter
 */
+
+
 class LCDialogController : public CDialogController
 {
 	public:
@@ -105,15 +112,34 @@ WidgetID LCDialogController::ValidateDialogFields(IActiveContext* myContext)
 void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const WidgetID& widgetId)
 {
 
-	//InterfacePtr<ITextEditSuite> textEditSuite(myContext->GetContextSelection(), UseDefaultIID());
+	time_t now = time(0);
+
+	char* dt = ctime(&now);
+
+	tinyxml2::XMLDocument xmlDoc;
+	tinyxml2::XMLNode* pRoot = xmlDoc.NewElement("root");
+	xmlDoc.InsertFirstChild(pRoot);
+
+	tinyxml2::XMLElement* pElementD = xmlDoc.NewElement("Date");
+	pElementD->SetText(dt);
+	pRoot->InsertEndChild(pElementD);
+
+	tinyxml2::XMLElement* pElementA = xmlDoc.NewElement("Author");
+	pElementA->SetText("Alexander Nevgen");
+	pRoot->InsertEndChild(pElementA);
 
 	IDocument* doc1 = myContext->GetContextDocument();
-
 	InterfacePtr<IStoryList> storylist((IPMUnknown*)doc1, IID_ISTORYLIST);
 
 	PMString str;
+	int32 wcount = 0;
+	
 
-	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++) {
+	int a;
+
+	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++)
+	{
+		int tmpcount = 0;
 
 		UIDRef storyRef = storylist->GetNthUserAccessibleStoryUID(i);
 		if (storyRef == kInvalidUIDRef) {
@@ -122,10 +148,9 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 
 		InterfacePtr<ITextModel> textModel(storyRef, IID_ITEXTMODEL);
 
-		int32 wcount = 0;
-
 		InterfacePtr<IWaxStrand> waxStrand((IWaxStrand*)textModel->QueryStrand(kFrameListBoss, IID_IWAXSTRAND));
 		K2::scoped_ptr<IWaxIterator> waxIterator(waxStrand->NewWaxIterator());
+
 		IWaxLine* nextLine;
 		IWaxLine* firstLine;
 
@@ -133,23 +158,53 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 
 		if (firstLine->GetTextSpan() > 1) {
 			wcount++;
+			tmpcount++;
 		}
 
-			while ((nextLine = waxIterator->GetNextWaxLine()) != nil) {
+		while ((nextLine = waxIterator->GetNextWaxLine()) != nil) {
 
-				if (nextLine->GetTextSpan() > 1) {
-					wcount++;
-				}
+			if (nextLine->GetTextSpan() > 1) {
+				wcount++;
+				tmpcount++;
 			}
+		}
 
-			if (textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
+		if (textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
 
-				wcount--;
-			}
+			wcount--;
+			tmpcount--;
+			tinyxml2::XMLElement* pElementLC = xmlDoc.NewElement("Table");
+			tinyxml2::XMLElement* pElement1LC = xmlDoc.NewElement("ID");
+			pElement1LC->SetText(i);
+			//pElement1LC->SetText(storyRef.GetUID().Get());
+			pElementLC->InsertEndChild(pElement1LC);
 
-		str.Append((WideString)"total lines in document - ");
-		str.Append((WideString)std::to_string(wcount).c_str());
+			tinyxml2::XMLElement* pElement2LC = xmlDoc.NewElement("LinesCount");
+			pElement2LC->SetText(tmpcount);
+			pElementLC->InsertEndChild(pElement2LC);
 
-		CAlert::InformationAlert(str);
+			pRoot->InsertEndChild(pElementLC);
+		}
+		else {
+
+			tinyxml2::XMLElement* pElement = xmlDoc.NewElement("TextBox");
+			tinyxml2::XMLElement* pElement1 = xmlDoc.NewElement("ID");
+			pElement1->SetText(i);
+			pElement->InsertEndChild(pElement1);
+
+			tinyxml2::XMLElement* pElement2 = xmlDoc.NewElement("LinesCount");
+			pElement2->SetText(tmpcount);
+			pElement->InsertEndChild(pElement2);
+			pRoot->InsertEndChild(pElement);
+		}
+
+
 	}
+
+	tinyxml2::XMLError eResult = xmlDoc.SaveFile("C:/InDesign-Plugin-master/win/XML/MetaData.xml");
+
+	str.Append((WideString)"total lines in document - ");
+	str.Append((WideString)std::to_string(wcount).c_str());
+
+	CAlert::InformationAlert(str);
 }

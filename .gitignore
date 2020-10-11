@@ -25,3 +25,14 @@ installers
 **/OutPut/*
 **/build/*
 **/.DS_Store
+*.png
+*.html
+*.js
+*.css
+*.txt
+*.xml
+*.in
+*.py
+*.md
+*.filters
+*.yml
