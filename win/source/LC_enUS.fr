@@ -32,9 +32,9 @@ resource StringTable (kSDKDefStringsResourceID + index_enUS)
         {
         	 // ----- Menu strings
                 kLCCompanyKey,					kLCCompanyValue,
-                kLCAboutMenuKey,					kLCPluginName "[US]...",
-                kLCPluginsMenuKey,				kLCPluginName "[US]",
-				kLCDialogMenuItemKey,			kLCPluginName "[US]",
+                kLCAboutMenuKey,				kLCPluginName,
+                kLCPluginsMenuKey,				kLCPluginName,
+				kLCDialogMenuItemKey,			"Run",
 	
                 kSDKDefAboutThisPlugInMenuKey,			kSDKDefAboutThisPlugInMenuValue_enUS,
 
@@ -43,12 +43,12 @@ resource StringTable (kSDKDefStringsResourceID + index_enUS)
                 // ----- Window strings
 
                 // ----- Panel/dialog strings
-				kLCDialogTitleKey,     kLCPluginName "[US]",
+				kLCDialogTitleKey,     kLCPluginName,
                 kLCDropDownItem_1Key, "Item1",
                 kLCDropDownItem_2Key, "Item2",
                 kLCDropDownItem_3Key, "Item3",
                 //StaticText string key
-                kLCStaticTextKey, "$",
+                kLCStaticTextKey, "This plugin count lines in active document.\nClick OK button to run.",
 
 
 		// ----- Misc strings
