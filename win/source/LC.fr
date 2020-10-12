@@ -292,15 +292,28 @@ resource LCDialogWidget (kSDKDefDialogResourceID + index_enUS)
 		// You should replace this widget with your own dialog content.
 		StaticTextWidget
 		(
-			0,								 // WidgetId (default=0)
+			kLCStaticTextWidgetID,								 // WidgetId (default=0)
 			kSysStaticTextPMRsrcId,			 // RsrcId
 			kBindNone,						 // Frame binding
-			Frame(0, 0, 270, 5),			 // Frame: left, top, right, bottom.
+			Frame(0, 0, 280, 80),			 // Frame: left, top, right, bottom.
 			kTrue, kTrue,					 // Visible, Enabled
 			kAlignLeft, kEllipsizeEnd, kTrue // Alignment, ellipsize style, convert ampersands
-			"",								 // Initial text.
-			0,
+			kLCStaticTextKey,								 // Initial text.
+			kLCTextEditBoxWidgetID,
 		),
+
+		/*StaticTextWidget
+		(
+			kLCStaticTextWidgetID,								 // WidgetId (default=0)
+			kSysStaticTextPMRsrcId,			 // RsrcId
+			kBindNone,						 // Frame binding
+			Frame(0, 0, 130, 20),			 // Frame: left, top, right, bottom.
+			kTrue, kTrue,					 // Visible, Enabled
+			kAlignLeft, kEllipsizeEnd, kTrue // Alignment, ellipsize style, convert ampersands
+			"Count in such page(s): ",								 // Initial text.
+			kLCTextEditBoxWidgetID,
+		),*/
+
 
 		// OK and Cancel buttons
 		EVEGenericPanelWidget
@@ -336,53 +349,6 @@ resource LCDialogWidget (kSDKDefDialogResourceID + index_enUS)
 					kTrue,								// Change to Reset on option-click.
 					kEVELargeSpaceAfter,
 				),
-				DropDownListWidget
-				(
-				kLCDropDownListWidgetID,
-				kSysDropDownPMRsrcId,
-				kBindNone,
-				Frame(10,16,140,36),
-				kTrue, kTrue,
-				{{
-					kLCDropDownItem_1Key, 
-					kLCDropDownItem_2Key,
-					kLCDropDownItem_3Key,
-				}}
-				),
-
-
-				TextEditBoxWidget
-				(
-				kLCTextEditBoxWidgetID,
-				kSysEditBoxPMRsrcId,
-				kBindNone,
-				Frame(200,16,250,36),
-				kTrue, kTrue,
-				0,
-				0, 0,
-				0,
-				kFalse,
-				kFalse,
-				kFalse,
-				kFalse,
-				0,
-				0,
-				"blank",
-				),
-
-
-				StaticTextWidget
-				(
-				kLCStaticTextWidgetID,
-				kSysStaticTextPMRsrcId,
-				kBindNone,
-				Frame(150,16,190,36),
-				kTrue, kTrue, kAlignRight,
-				kDontEllipsize, kTrue,
-				kLCStaticTextKey,
-				kLCTextEditBoxWidgetID
-
-				)
 			}
 		),
 	},
@@ -394,4 +360,3 @@ resource LCDialogWidget (kSDKDefDialogResourceID + index_enUS)
 
 #include "LC_enUS.fr"
 #include "LC_jaJP.fr"
-#include "LC_ruRU.fr"
