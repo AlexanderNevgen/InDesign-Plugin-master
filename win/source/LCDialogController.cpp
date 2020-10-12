@@ -112,30 +112,27 @@ WidgetID LCDialogController::ValidateDialogFields(IActiveContext* myContext)
 void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const WidgetID& widgetId)
 {
 
+	//get current time
 	time_t now = time(0);
-
 	char* dt = ctime(&now);
-
+	//set root element in XML
 	tinyxml2::XMLDocument xmlDoc;
 	tinyxml2::XMLNode* pRoot = xmlDoc.NewElement("root");
 	xmlDoc.InsertFirstChild(pRoot);
-
+	//set date element
 	tinyxml2::XMLElement* pElementD = xmlDoc.NewElement("Date");
 	pElementD->SetText(dt);
 	pRoot->InsertEndChild(pElementD);
-
+	//set author element
 	tinyxml2::XMLElement* pElementA = xmlDoc.NewElement("Author");
 	pElementA->SetText("Alexander Nevgen");
 	pRoot->InsertEndChild(pElementA);
-
+	//create document object
 	IDocument* doc1 = myContext->GetContextDocument();
 	InterfacePtr<IStoryList> storylist((IPMUnknown*)doc1, IID_ISTORYLIST);
 
-	PMString str;
+	PMString resultStr;
 	int32 wcount = 0;
-	
-
-	int a;
 
 	for (int32 i = 0; i < storylist->GetUserAccessibleStoryCount(); i++)
 	{
@@ -145,9 +142,8 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 		if (storyRef == kInvalidUIDRef) {
 			continue;
 		}
-
+		//get iterator
 		InterfacePtr<ITextModel> textModel(storyRef, IID_ITEXTMODEL);
-
 		InterfacePtr<IWaxStrand> waxStrand((IWaxStrand*)textModel->QueryStrand(kFrameListBoss, IID_IWAXSTRAND));
 		K2::scoped_ptr<IWaxIterator> waxIterator(waxStrand->NewWaxIterator());
 
@@ -168,7 +164,7 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 				tmpcount++;
 			}
 		}
-
+		//to distinguish the table from text-box
 		if (textModel->TotalLength() != textModel->GetPrimaryStoryThreadSpan()) {
 
 			wcount--;
@@ -176,7 +172,6 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 			tinyxml2::XMLElement* pElementLC = xmlDoc.NewElement("Table");
 			tinyxml2::XMLElement* pElement1LC = xmlDoc.NewElement("ID");
 			pElement1LC->SetText(i);
-			//pElement1LC->SetText(storyRef.GetUID().Get());
 			pElementLC->InsertEndChild(pElement1LC);
 
 			tinyxml2::XMLElement* pElement2LC = xmlDoc.NewElement("LinesCount");
@@ -201,10 +196,10 @@ void LCDialogController::ApplyDialogFields(IActiveContext* myContext, const Widg
 
 	}
 
-	tinyxml2::XMLError eResult = xmlDoc.SaveFile("C:/InDesign-Plugin-master/win/XML/MetaData.xml");
+	tinyxml2::XMLError eResult = xmlDoc.SaveFile("MetaData.xml");
 
-	str.Append((WideString)"total lines in document - ");
-	str.Append((WideString)std::to_string(wcount).c_str());
+	resultStr.Append((WideString)"total lines in document - ");
+	resultStr.Append((WideString)std::to_string(wcount).c_str());
 
-	CAlert::InformationAlert(str);
+	CAlert::InformationAlert(resultStr);
 }
